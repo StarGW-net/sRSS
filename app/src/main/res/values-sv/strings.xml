@@ -5,9 +5,9 @@
         <item quantity="one">Ett nytt inlägg</item>
         <item quantity="other">%d nya inlägg</item>
     </plurals>
-    <string name="about_flym">Om Flym</string>
-    <string name="welcome_title">Välkommen till Flym. Skulle du vilja lägga till en feed?</string>
-    <string name="welcome_title_with_opml_import">Skulle du vilja importera tidigare Flym feeds?</string>
+    <string name="about_sRSS">Om sRSS</string>
+    <string name="welcome_title">Välkommen till sRSS. Skulle du vilja lägga till en feed?</string>
+    <string name="welcome_title_with_opml_import">Skulle du vilja importera tidigare sRSS feeds?</string>
     <string name="cannot_find_feeds">Inga feeds hittades</string>
     <string name="menu_settings">Inställningar</string>
     <string name="menu_edit_feed">Redigera feed</string>
@@ -71,7 +71,6 @@
     <string name="filter">Radera inlägg med nyckelord (lista separerade med komma)</string>
     <string name="settings_theme">Tema</string>
     <string-array name="settings_intervals">
-        <item>5 minuter</item>
         <item>15 minuter</item>
         <item>30 minuter</item>
         <item>1 timme</item>

@@ -5,8 +5,8 @@
         <item quantity="one">Uma nova entrada</item>
         <item quantity="other">%d novas entradas</item>
     </plurals>
-    <string name="about_flym">Sobre Flym</string>
-    <string name="welcome_title">Bem-vindo ao Flym. Você gostaria de adicionar um feed?</string>
+    <string name="about_sRSS">Sobre sRSS</string>
+    <string name="welcome_title">Bem-vindo ao sRSS. Você gostaria de adicionar um feed?</string>
     <string name="cannot_find_feeds">No feeds has been found</string>
     <string name="menu_settings">Configurações</string>
     <string name="menu_edit_feed">Editar feed</string>
@@ -58,7 +58,6 @@
     <string name="settings_remove_duplicates_description">Checks the title of newly downloaded item and skips when one with the same title is already present</string>
     <string name="filter">Remove items containing keywords (coma-separated list)</string>
     <string-array name="settings_intervals">
-        <item>5 minutos</item>
         <item>15 minutos</item>
         <item>30 minutos</item>
         <item>1 hora</item>

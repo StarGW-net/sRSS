@@ -30,6 +30,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Handler
 import android.text.Html
+import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.rometools.rome.io.SyndFeedInput
 import com.rometools.rome.io.XmlReader
@@ -64,6 +65,7 @@ import org.jsoup.Jsoup
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
+import java.io.InputStream
 import java.net.CookieManager
 import java.net.CookiePolicy
 import java.util.concurrent.ExecutorCompletionService
@@ -108,6 +110,9 @@ class FetcherService : IntentService(FetcherService::class.java.simpleName) {
                 .build())
 
         fun fetch(context: Context, isFromAutoRefresh: Boolean, action: String, feedId: Long = 0L) {
+
+            App.myLog("Fetcher Service getting data: " + feedId)
+
             if (context.getPrefBoolean(PrefConstants.IS_REFRESHING, false)) {
                 return
             }
@@ -159,6 +164,8 @@ class FetcherService : IntentService(FetcherService::class.java.simpleName) {
                         }
                     }
 
+                    App.myLog("Fetch got = " + newCount)
+
                     showRefreshNotification(newCount)
                     mobilizeAllEntries()
                     downloadAllImages()
@@ -178,6 +185,7 @@ class FetcherService : IntentService(FetcherService::class.java.simpleName) {
                     val unread = App.db.entryDao().countUnread
 
                     if (unread > 0) {
+                        App.myLog("Notification! Unread = " + unread)
                         val text = context.resources.getQuantityString(
                                 R.plurals.number_of_new_entries,
                                 unread.toInt(),
@@ -211,13 +219,14 @@ class FetcherService : IntentService(FetcherService::class.java.simpleName) {
                                 .setLargeIcon(
                                         BitmapFactory.decodeResource(
                                                 context.resources,
-                                                R.mipmap.ic_launcher
+                                                //R.mipmap.ic_launcher  // STEVE
+                                                R.drawable.icon4  // STEVE
                                         )
                                 )
                                 .setTicker(text)
                                 .setWhen(System.currentTimeMillis())
                                 .setAutoCancel(true)
-                                .setContentTitle(context.getString(R.string.flym_feeds))
+                                .setContentTitle(context.getString(R.string.sRSS_feeds))
                                 .setContentText(text)
 
                         context.notificationManager.notify(0, notifBuilder.build())
@@ -292,38 +301,86 @@ class FetcherService : IntentService(FetcherService::class.java.simpleName) {
             for (task in tasks) {
                 var success = false
 
+
+
                 App.db.entryDao().findById(task.entryId)?.let { entry ->
                     entry.link?.let { link ->
                         try {
                             createCall(link).execute().use { response ->
-                                response.body?.byteStream()?.let { input ->
-                                    Readability4JExtended(link, Jsoup.parse(input, null, link)).parse().articleContent?.html()?.let {
-                                        val mobilizedHtml = HtmlUtils.improveHtmlContent(it, getBaseUrl(link))
+                                    // Log.w("STEVE HTML", response.body?.string())
+                                    // Log.w("STEVE HTML", response.body?.string()?.takeLast(255))
+                                    // val text  = response.body?.string()
+                                    val url :String = link
+                                    // response.body?.byteStream()?.let { input ->
+                                    response.body?.let { sinput ->
+                                        // Readability4JExtended(link, Jsoup.parse(input, null, link)).parse().articleContent?.html()?.let {
 
-                                        @Suppress("DEPRECATION")
-                                        if (entry.description == null || Html.fromHtml(mobilizedHtml).length > Html.fromHtml(entry.description).length) { // If the retrieved text is smaller than the original one, then we certainly failed...
-                                            if (downloadPictures) {
-                                                val imagesList = HtmlUtils.getImageURLs(mobilizedHtml)
-                                                if (imagesList.isNotEmpty()) {
-                                                    if (entry.imageLink == null) {
-                                                        entry.imageLink = HtmlUtils.getMainImageURL(imagesList)
-                                                    }
-                                                    imgUrlsToDownload[entry.id] = imagesList
-                                                }
-                                            } else if (entry.imageLink == null) {
-                                                entry.imageLink = HtmlUtils.getMainImageURL(mobilizedHtml)
+                                        // For the Daily Mail
+                                        val re = Regex("\\<p class=\"imageCaption\".*?\\<\\/p\\>")
+                                        val text  = re.replace(sinput.string(), "");
+
+/*
+                                        val re = Regex("\\<img.*?data-src=\"(.*?)\".*?\\>")
+                                        val result = sinput.string().replace(re) { "<img src=\"" + it.groups[1]!!.value + "\">" }
+*/
+                                        Readability4JExtended(link, Jsoup.parse(text, link)).parse().articleContent?.html()?.let {
+                                            // Log.w("STEVE HTML",input.toString().takeLast(255) )
+                                            // Log.w("STEVE HTML", text)
+                                            App.myLog("URL = " + link )
+
+                                            // var forum = "<p>News brought to you by <a href=\"https://www.stevewatts.com\">Steve</a> :-)</p>"
+                                            var forum = ""
+                                            val regex = "\\/\\/go\\.theregister\\.com\\/feed\\/www\\.theregister\\.com\\/(.*?)\$".toRegex()
+                                            val match = regex.find(url)
+
+                                            if (match != null)
+                                            {
+                                                forum = "<p>Match = " + match.value + "</p>"
+                                                App.myLog("HTML1 = " + forum )
+                                                val (item) = match!!.destructured
+                                                App.myLog("HTML2" + item )
+                                                forum = "<p><a href=\"https://forums.theregister.com/forum/all/" + item + "\">Register Forum</p><br>"
                                             }
 
-                                            success = true
+                                            /*
+                                        val regex = "https:\\/\\/forums.theregister.com\\/(.*?)\"".toRegex()
+                                        val match = regex.find(text)
 
-                                            entry.mobilizedContent = mobilizedHtml
-                                            App.db.entryDao().update(entry)
 
-                                            App.db.taskDao().delete(task)
+
+                                        if (match != null)
+                                        {
+                                            forum = "<p>" + match.value + "</p>"
+                                            Log.w("STEVE HTML",forum )
+                                        }
+                                        */
+
+                                            val mobilizedHtml = HtmlUtils.improveHtmlContent(it, getBaseUrl(link)) + forum
+
+                                            @Suppress("DEPRECATION")
+                                            if (entry.description == null || Html.fromHtml(mobilizedHtml).length > Html.fromHtml(entry.description).length) { // If the retrieved text is smaller than the original one, then we certainly failed...
+                                                if (downloadPictures) {
+                                                    val imagesList = HtmlUtils.getImageURLs(mobilizedHtml)
+                                                    if (imagesList.isNotEmpty()) {
+                                                        if (entry.imageLink == null) {
+                                                            entry.imageLink = HtmlUtils.getMainImageURL(imagesList)
+                                                        }
+                                                        imgUrlsToDownload[entry.id] = imagesList
+                                                    }
+                                                } else if (entry.imageLink == null) {
+                                                    entry.imageLink = HtmlUtils.getMainImageURL(mobilizedHtml)
+                                                }
+
+                                                success = true
+
+                                                entry.mobilizedContent = mobilizedHtml
+                                                App.db.entryDao().update(entry)
+
+                                                App.db.taskDao().delete(task)
+                                            }
                                         }
                                     }
                                 }
-                            }
                         } catch (t: Throwable) {
                             error("Can't mobilize feedWithCount ${entry.link}", t)
                         }

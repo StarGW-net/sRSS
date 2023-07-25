@@ -15,7 +15,7 @@
         android:imeOptions="actionSearch"
         android:singleLine="true"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@id/fcv_discover_fragments"
+        app:layout_constraintBottom_toTopOf="@id/feed_no_results"
         app:layout_constraintEnd_toStartOf="@+id/btn_add_feed"
         app:layout_constraintHorizontal_chainStyle="spread"
         app:layout_constraintLeft_toRightOf="@id/btn_add_feed"
@@ -26,17 +26,75 @@
 
     <ImageButton
         android:id="@+id/btn_add_feed"
+        android:layout_marginTop="24dp"
         style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_search_white_24dp"
         android:tint="@color/colorPrimary"
-        app:layout_constraintBottom_toTopOf="@id/fcv_discover_fragments"
+        app:layout_constraintBottom_toTopOf="@id/feed_no_results"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_chainStyle="spread"
         app:layout_constraintLeft_toLeftOf="@id/et_search_input"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="ContentDescription" />
+
+    <LinearLayout
+        android:id="@+id/feed_no_results"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="top"
+        android:orientation="vertical"
+        android:paddingTop="16dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_default="spread"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_search_input">
+
+        <TextView
+            android:id="@+id/feed_no_results_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:scrollHorizontally="true"
+            android:singleLine="true"
+            android:visibility="gone"
+            android:text="No Search Results for feed!"
+            android:textColor="#ff0000"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textIsSelectable="false" />
+
+        <LinearLayout
+            android:id="@+id/scanButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
+            android:paddingTop="20dp"
+            android:layout_alignParentBottom="true"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:layout_gravity="center_horizontal"
+            android:orientation="horizontal">
+
+
+            <Button
+                android:id="@+id/feed_add_manually"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#6495ed"
+                android:visibility="gone"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Add Feed Manually"
+                android:textStyle="bold" />
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fcv_discover_fragments"
@@ -48,7 +106,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_default="spread"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_search_input" />
+        app:layout_constraintTop_toBottomOf="@+id/feed_no_results" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

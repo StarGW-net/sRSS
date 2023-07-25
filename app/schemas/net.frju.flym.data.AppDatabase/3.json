@@ -82,7 +82,7 @@
             "columnNames": [
               "groupId"
             ],
-            "createSql": "CREATE  INDEX `index_feeds_groupId` ON `${TABLE_NAME}` (`groupId`)"
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_feeds_groupId` ON `${TABLE_NAME}` (`groupId`)"
           },
           {
             "name": "index_feeds_feedId_feedLink",
@@ -91,7 +91,7 @@
               "feedId",
               "feedLink"
             ],
-            "createSql": "CREATE UNIQUE INDEX `index_feeds_feedId_feedLink` ON `${TABLE_NAME}` (`feedId`, `feedLink`)"
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_feeds_feedId_feedLink` ON `${TABLE_NAME}` (`feedId`, `feedLink`)"
           }
         ],
         "foreignKeys": [
@@ -198,7 +198,7 @@
             "columnNames": [
               "feedId"
             ],
-            "createSql": "CREATE  INDEX `index_entries_feedId` ON `${TABLE_NAME}` (`feedId`)"
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_entries_feedId` ON `${TABLE_NAME}` (`feedId`)"
           },
           {
             "name": "index_entries_link",
@@ -206,7 +206,7 @@
             "columnNames": [
               "link"
             ],
-            "createSql": "CREATE UNIQUE INDEX `index_entries_link` ON `${TABLE_NAME}` (`link`)"
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_entries_link` ON `${TABLE_NAME}` (`link`)"
           }
         ],
         "foreignKeys": [
@@ -260,7 +260,7 @@
             "columnNames": [
               "entryId"
             ],
-            "createSql": "CREATE  INDEX `index_tasks_entryId` ON `${TABLE_NAME}` (`entryId`)"
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_tasks_entryId` ON `${TABLE_NAME}` (`entryId`)"
           }
         ],
         "foreignKeys": [
@@ -278,9 +278,10 @@
         ]
       }
     ],
+    "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"31435aa9bc89d78889a9d396fa842371\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '31435aa9bc89d78889a9d396fa842371')"
     ]
   }
 }

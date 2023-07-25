@@ -5,10 +5,10 @@
         <item quantity="one">Uma nova entrada</item>
         <item quantity="other">%d novas entradas</item>
     </plurals>
-    <string name="app_name">Flym</string>
-    <string name="about_flym">Sobre o Flym</string>
-    <string name="welcome_title">Bem-vindo ao Flym. Gostaria de adicionar um feed?</string>
-    <string name="welcome_title_with_opml_import">Gostaria de importar os feeds anteriores do Flym?</string>
+    <string name="app_name">sRSS</string>
+    <string name="about_sRSS">Sobre o sRSS</string>
+    <string name="welcome_title">Bem-vindo ao sRSS. Gostaria de adicionar um feed?</string>
+    <string name="welcome_title_with_opml_import">Gostaria de importar os feeds anteriores do sRSS?</string>
     <string name="cannot_find_feeds">Nenhum feed foi encontrado</string>
     <string name="menu_settings">Configurações</string>
     <string name="menu_edit_feed">Editar feed</string>
@@ -17,7 +17,7 @@
     <string name="menu_enable_full_text_retrieval">Ativar recuperação completa de texto</string>
     <string name="menu_disable_full_text_retrieval">Desativar recuperação completa de texto</string>
     <string name="menu_all_read">Marcar tudo como lido</string>
-    <string name="flym_feeds">Feeds do Flym</string>
+    <string name="sRSS_feeds">Feeds do sRSS</string>
     <string name="error">Erro</string>
     <string name="network_error">A internet não está disponível</string>
     <string name="drawer_explanation">Bem-vindo(a)!\n\nPressione e segure os feeds para ver as opções</string>
@@ -64,24 +64,9 @@
     <string name="discover_search_label">Buscar Feeds</string>
     <string name="discover_search_hint">Buscar por palavra-chave, URL ou tópico. Tópicos podem ser indicados com um prefixo #.</string>
     <string-array name="discover_topics">
-        <item>notícias</item>
-        <item>política</item>
-        <item>mundo</item>
-        <item>engenharia</item>
-        <item>tecnologia</item>
-        <item>startups</item>
-        <item>telecom</item>
-        <item>cibersegurança</item>
-        <item>privacidade</item>
-        <item>ciência</item>
-        <item>medicina</item>
-        <item>saúde</item>
-        <item>educação</item>
-        <item>negócios</item>
-        <item>marketing</item>
-        <item>espaço</item>
-        <item>design</item>
-        <item>quadrinhos</item>
+        <item>News</item>
+        <item>Tech</item>
+        <item>Sport</item>
     </string-array>
     <!-- SETTINGS -->
     <string name="entry_default_title">Sem título</string>
@@ -118,7 +103,6 @@
     <string name="settings_enable_entry_swipe">Habilitar deslizar ao visualizar uma entrada</string>
     <string name="settings_enable_entry_swipe_description">Se ativado, permite deslizar entre os itens ao exibir uma entrada.</string>
     <string-array name="settings_intervals">
-        <item>5 minutos</item>
         <item>15 minutos</item>
         <item>30 minutos</item>
         <item>1 hora</item>

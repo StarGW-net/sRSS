@@ -103,6 +103,7 @@ class FeedSearchFragment : Fragment(), AdapterView.OnItemClickListener {
     }
 
     private fun searchForFeed(term: String) {
+        App.myLog("Called searchForFeed " + term)
         doAsync {
             val array = ArrayList<SearchFeedResult>()
             try {
@@ -110,6 +111,8 @@ class FeedSearchFragment : Fragment(), AdapterView.OnItemClickListener {
                     it.body?.let { body ->
                         val json = JSONObject(body.string())
                         val entries = json.getJSONArray("results")
+
+                        App.myLog("Number of feeds = " + entries.length())
 
                         for (i in 0 until entries.length()) {
                             try {
@@ -127,11 +130,20 @@ class FeedSearchFragment : Fragment(), AdapterView.OnItemClickListener {
                                     array.add(feedResult)
                                 }
                                 uiThread {
+
                                     (resultsListView?.adapter as SearchResultsAdapter).updateData(term, array)
+                                    // (activity as DiscoverActivity?)?.urlResults()
                                 }
 
                             } catch (e: JSONException) {
                                 e.printStackTrace()
+                            }
+                        }
+
+                        if (entries.length() == 0)
+                        {
+                            uiThread {
+                                (activity as DiscoverActivity?)?.noResults()
                             }
                         }
                     }
@@ -163,6 +175,9 @@ class FeedSearchFragment : Fragment(), AdapterView.OnItemClickListener {
             }
         }
     }
+
+
+
 
     class SearchResultsAdapter(context: Context, items: ArrayList<SearchFeedResult>) :
             ArrayAdapter<SearchFeedResult>(context, R.layout.item_feed_search_result, items) {

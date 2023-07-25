@@ -5,10 +5,10 @@
         <item quantity="one">Un nuovo articolo</item>
         <item quantity="other">%d nuovi articoli</item>
     </plurals>
-    <string name="app_name">Flym</string>
-    <string name="about_flym">Informazioni su Flym</string>
-    <string name="welcome_title">Benvenuto in Flym. Vuoi aggiungere un feed?</string>
-    <string name="welcome_title_with_opml_import">Vuoi importare i feed precedenti in Flym?</string>
+    <string name="app_name">sRSS</string>
+    <string name="about_sRSS">Informazioni su sRSS</string>
+    <string name="welcome_title">Benvenuto in sRSS. Vuoi aggiungere un feed?</string>
+    <string name="welcome_title_with_opml_import">Vuoi importare i feed precedenti in sRSS?</string>
     <string name="cannot_find_feeds">Nessun feed è stato trovato</string>
     <string name="menu_settings">Impostazioni</string>
     <string name="menu_edit_feed">Modifica il feed</string>
@@ -17,7 +17,7 @@
     <string name="menu_enable_full_text_retrieval">Abilita il recupero del testo completo</string>
     <string name="menu_disable_full_text_retrieval">Disabilita il recupero del testo completo</string>
     <string name="menu_all_read">Segna tutti come letti</string>
-    <string name="flym_feeds">Feed di Flym</string>
+    <string name="sRSS_feeds">Feed di sRSS</string>
     <string name="error">Errore</string>
     <string name="network_error">Nessuna connessione disponibile</string>
     <string name="drawer_explanation">Benvenuto!\n\nCon una pressione prolungata sui feed vedrai le opzioni ▼</string>
@@ -64,24 +64,9 @@
     <string name="discover_search_label">Cerca feed</string>
     <string name="discover_search_hint">Cerca per parola chiave, URL o argomento. Gli argomenti possono essere indicati con # come prefisso.</string>
     <string-array name="discover_topics">
-        <item>notizie</item>
-        <item>politica</item>
-        <item>mondo</item>
-        <item>ingegneria</item>
-        <item>tecnologia</item>
-        <item>startup</item>
-        <item>telecomunicazioni</item>
-        <item>sicurezza informatica</item>
-        <item>privacy</item>
-        <item>scienza</item>
-        <item>medicina</item>
-        <item>sanità</item>
-        <item>istruzione</item>
-        <item>affari</item>
-        <item>marketing</item>
-        <item>spazio</item>
-        <item>design</item>
-        <item>fumetti</item>
+        <item>News</item>
+        <item>Tech</item>
+        <item>Sport</item>
     </string-array>
     <!-- SETTINGS -->
     <string name="entry_default_title">Senza titolo</string>
@@ -118,7 +103,6 @@
     <string name="settings_enable_entry_swipe">Abilita lo swipe durante la visualizzazione di una voce</string>
     <string name="settings_enable_entry_swipe_description">Se abilitato, permette lo swipe fra gli articoli mentre se ne vede uno.</string>
     <string-array name="settings_intervals">
-        <item>5 minuti</item>
         <item>15 minuti</item>
         <item>30 minuti</item>
         <item>1 ora</item>

@@ -24,11 +24,15 @@ import android.view.ViewGroup
 import com.bignerdranch.expandablerecyclerview.ChildViewHolder
 import com.bignerdranch.expandablerecyclerview.ExpandableRecyclerAdapter
 import com.bignerdranch.expandablerecyclerview.ParentViewHolder
+import kotlinx.android.synthetic.main.view_entry.view.*
 import kotlinx.android.synthetic.main.view_feed.view.*
+import kotlinx.android.synthetic.main.view_feed.view.title
 import net.fred.feedex.R
+import net.frju.flym.App
 import net.frju.flym.data.entities.Feed
 import net.frju.flym.data.entities.FeedWithCount
 import net.frju.flym.data.utils.PrefConstants
+import net.frju.flym.utils.getPrefBoolean
 import net.frju.flym.utils.getPrefString
 import org.jetbrains.anko.dip
 import org.jetbrains.anko.sdk21.listeners.onClick
@@ -103,6 +107,7 @@ abstract class BaseFeedAdapter(groups: List<FeedGroup>) : ExpandableRecyclerAdap
         : ParentViewHolder<FeedGroup, FeedWithCount>(itemView) {
 
         fun bindItem(group: FeedGroup) {
+            // itemView.icon.visibility = View.VISIBLE;
             if (group.feedWithCount.feed.isGroup) {
                 if (isExpanded) {
                     itemView.icon.setImageResource(
@@ -145,9 +150,23 @@ abstract class BaseFeedAdapter(groups: List<FeedGroup>) : ExpandableRecyclerAdap
                                 else -> R.drawable.ic_list_white_24dp
                             })
                 } else {
-                    itemView.icon.setImageDrawable(group.feedWithCount.feed.getLetterDrawable(true))
+                    // STEVE
+                    if (App.context.getPrefBoolean(PrefConstants.DISPLAY_THUMBS, true)) {
+                        // itemView.icon.visibility = View.VISIBLE;
+                        itemView.icon.setImageDrawable(group.feedWithCount.feed.getLetterDrawable(true))
+                    } else {
+                        // itemView.icon.visibility = View.GONE;
+                        itemView.icon.setImageResource(
+                                when (itemView.context.getPrefString(PrefConstants.THEME, "DARK")) {
+                                    "LIGHT" -> R.drawable.ic_text_dot_black
+                                    else -> R.drawable.ic_text_dot_white
+                                })
+                    }
                 }
             }
+
+
+
             itemView.title.text = group.feedWithCount.feed.title
             itemView.entry_count?.text = group.getEntryCountString()
             if (group.feedWithCount.feed.fetchError || group.subFeeds.any { it.feed.fetchError }) {
@@ -188,8 +207,21 @@ abstract class BaseFeedAdapter(groups: List<FeedGroup>) : ExpandableRecyclerAdap
                             else -> Color.WHITE
                         })
             }
-            itemView.icon.isClickable = false
-            itemView.icon.setImageDrawable(feedWithCount.feed.getLetterDrawable(true))
+
+            // STEVE
+            if (App.context.getPrefBoolean(PrefConstants.DISPLAY_THUMBS, true)) {
+                // itemView.icon.visibility = View.VISIBLE;
+                itemView.icon.isClickable = false
+                itemView.icon.setImageDrawable(feedWithCount.feed.getLetterDrawable(true))
+            } else {
+                // itemView.icon.visibility = View.GONE;
+                itemView.icon.setImageResource(
+                        when (itemView.context.getPrefString(PrefConstants.THEME, "DARK")) {
+                            "LIGHT" -> R.drawable.ic_text_dot_black
+                            else -> R.drawable.ic_text_dot_white
+                        })
+            }
+
             itemView.setPadding(itemView.dip(30), 0, 0, 0)
             itemView.onClick {
                 feedClickListener?.invoke(itemView, feedWithCount)

@@ -10,11 +10,11 @@
 
     <ImageView
         android:id="@+id/icon"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
         android:layout_marginStart="0dp"
-        android:padding="11dp"
         android:scaleType="center"
+        android:src="@drawable/ic_text_dot"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -26,6 +26,8 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
+        android:paddingLeft="4dp"
+        android:text="string here"
         android:ellipsize="end"
         android:maxLines="1"
         android:textAppearance="?android:attr/textAppearanceMedium"

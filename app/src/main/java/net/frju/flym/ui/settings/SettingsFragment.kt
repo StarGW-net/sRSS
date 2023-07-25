@@ -17,10 +17,12 @@
 
 package net.frju.flym.ui.settings
 
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener
 import android.os.Bundle
-import android.preference.Preference
 import android.preference.PreferenceFragment
+import android.util.Log
 import net.fred.feedex.R
+import net.frju.flym.App
 import net.frju.flym.data.utils.PrefConstants
 import net.frju.flym.service.AutoRefreshJobService
 import net.frju.flym.ui.main.MainActivity
@@ -29,23 +31,55 @@ import org.jetbrains.anko.startActivity
 
 class SettingsFragment : PreferenceFragment() {
 
-    private val onRefreshChangeListener = Preference.OnPreferenceChangeListener { _, _ ->
-        AutoRefreshJobService.initAutoRefresh(activity)
-        true
+    var listener = OnSharedPreferenceChangeListener { prefs, key ->
+
+        App.myLog("Settings changed: " + key)
+        if ((key == PrefConstants.REFRESH_ENABLED) || (key == PrefConstants.REFRESH_INTERVAL))
+        {
+            AutoRefreshJobService.initAutoRefresh(activity)
+        }
+
+        if ((key == PrefConstants.THEME) || (key == PrefConstants.DISPLAY_THUMBS) || (key == PrefConstants.FONT_SIZE_HEADING ) ) {
+            activity.finishAffinity()
+            startActivity<MainActivity>()
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        App.myLog("Settings loaded!")
         addPreferencesFromResource(R.xml.settings)
 
-        findPreference(PrefConstants.REFRESH_ENABLED)?.onPreferenceChangeListener = onRefreshChangeListener
-        findPreference(PrefConstants.REFRESH_INTERVAL)?.onPreferenceChangeListener = onRefreshChangeListener
+        // need to add an onpref change listener here...
+
+        /*
+        findPreference(PrefConstants.REFRESH_ENABLED)?.set = listener;
+
+        findPreference(PrefConstants.REFRESH_INTERVAL)?.setOnPreferenceChangeListener { preference, any ->
+            AutoRefreshJobService.initAutoRefresh(activity)
+            App.myLog("Settings changed!")
+            true
+        }
+
+
 
         findPreference(PrefConstants.THEME)?.setOnPreferenceChangeListener { preference, any ->
             activity.finishAffinity()
             startActivity<MainActivity>()
             true
         }
+        */
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        preferenceManager.sharedPreferences.registerOnSharedPreferenceChangeListener(listener)
+    }
+
+    override fun onPause() {
+        preferenceManager.sharedPreferences.unregisterOnSharedPreferenceChangeListener(listener)
+        super.onPause()
     }
 }

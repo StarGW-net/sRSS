@@ -5,10 +5,10 @@
         <item quantity="one">Yeni bir öğe</item>
         <item quantity="other">%d yeni öğe</item>
     </plurals>
-    <string name="app_name">Flym</string>
-    <string name="about_flym">Flym Hakkında</string>
-    <string name="welcome_title">Flym\'e hoşgeldiniz. Yayın eklemek ister misiniz?</string>
-    <string name="welcome_title_with_opml_import">Bir önceki Flym yayınlarını eklemek ister misiniz?</string>
+    <string name="app_name">sRSS</string>
+    <string name="about_sRSS">sRSS Hakkında</string>
+    <string name="welcome_title">sRSS\'e hoşgeldiniz. Yayın eklemek ister misiniz?</string>
+    <string name="welcome_title_with_opml_import">Bir önceki sRSS yayınlarını eklemek ister misiniz?</string>
     <string name="cannot_find_feeds">Yayın bulunamadı</string>
     <string name="menu_settings">Ayarlar</string>
     <string name="menu_edit_feed">Yayını düzenle</string>
@@ -17,7 +17,7 @@
     <string name="menu_enable_full_text_retrieval">Tam metin olarak almayı etkinleştir</string>
     <string name="menu_disable_full_text_retrieval">Tam metin olarak almayı kapat</string>
     <string name="menu_all_read">Tümünü okundu olarak işaretle</string>
-    <string name="flym_feeds">Flym yayınları</string>
+    <string name="sRSS_feeds">sRSS yayınları</string>
     <string name="error">Hata</string>
     <string name="network_error">Ağ kurulmadı</string>
     <string name="drawer_explanation">Merhaba!\n\nSeçenekleri görmek için yayına uzun basın ▼</string>
@@ -64,24 +64,9 @@
     <string name="discover_search_label">Yayın Ara</string>
     <string name="discover_search_hint">Anahtar kelime, URL veya başlık ara. Başlıkları # ön eki ile belirtebilirsiniz.</string>
     <string-array name="discover_topics">
-        <item>haber</item>
-        <item>politika</item>
-        <item>dünya</item>
-        <item>mühendislik</item>
-        <item>teknoloji</item>
-        <item>startuplar</item>
-        <item>telekom</item>
-        <item>siber güvenlik</item>
-        <item>gizlilik</item>
-        <item>bilim</item>
-        <item>tıp</item>
-        <item>sağlık</item>
-        <item>eğitim</item>
-        <item>iş</item>
-        <item>alışveriş</item>
-        <item>uzay</item>
-        <item>tasarım</item>
-        <item>karikatür</item>
+        <item>News</item>
+        <item>Tech</item>
+        <item>Sport</item>
     </string-array>
     <!-- SETTINGS -->
     <string name="entry_default_title">Adsız</string>
@@ -118,7 +103,6 @@
     <string name="settings_enable_entry_swipe">Bir öğeyi gösterirken kaydırma hareketini etkinleştir</string>
     <string name="settings_enable_entry_swipe_description">Etkinleştirildiğinde öğe gösterilirken öğeler arasında geçiş yapmayı sağlar.</string>
     <string-array name="settings_intervals">
-        <item>5 dakika</item>
         <item>15 dakika</item>
         <item>30 dakika</item>
         <item>1 saat</item>

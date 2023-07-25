@@ -11,10 +11,12 @@
         android:text="@string/discover_search_hint"
         android:textSize="18sp" />
 
-    <GridView
+    <ListView
         android:id="@+id/gv_topics"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:dividerHeight="0dp"
+        android:divider="@null"
         android:numColumns="3" />
 
 </LinearLayout>

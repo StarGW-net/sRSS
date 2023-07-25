@@ -5,9 +5,9 @@
         <item quantity="one">Yksi uusi artikkeli</item>
         <item quantity="other">%d uutta artikkelia</item>
     </plurals>
-    <string name="about_flym">Tietoja Flymista</string>
-    <string name="welcome_title">Tervetuloa Flym:iin. Haluaisitko lisätä syötteen?</string>
-    <string name="welcome_title_with_opml_import">Haluatko tuoda aiemmat Flym-syötteet?</string>
+    <string name="about_sRSS">Tietoja sRSSista</string>
+    <string name="welcome_title">Tervetuloa sRSS:iin. Haluaisitko lisätä syötteen?</string>
+    <string name="welcome_title_with_opml_import">Haluatko tuoda aiemmat sRSS-syötteet?</string>
     <string name="cannot_find_feeds">Syötteitä ei löydy</string>
     <string name="menu_settings">Asetukset</string>
     <string name="menu_edit_feed">Muokkaa syötettä</string>
@@ -16,7 +16,7 @@
     <string name="menu_enable_full_text_retrieval">Koko tekstin haku päälle</string>
     <string name="menu_disable_full_text_retrieval">Koko tekstin haku pois päältä</string>
     <string name="menu_all_read">Merkitse kaikki luetuiksi</string>
-    <string name="flym_feeds">Flym-syötteet</string>
+    <string name="sRSS_feeds">sRSS-syötteet</string>
     <string name="error">Virhe</string>
     <string name="network_error">Ei verkkoyhteyttä</string>
     <string name="drawer_explanation">Tervetuloa!\n\nPitkä painallus syötteen otsikon kohdalla näyttää valikon ▼</string>
@@ -84,7 +84,6 @@
     <string name="filter">Poista artikkelit joissa esiintyy avainsanat (pilkulla erotettu lista)</string>
     <string name="settings_theme">Teema</string>
     <string-array name="settings_intervals">
-        <item>5 minuuttia</item>
         <item>15 minuuttia</item>
         <item>30 minuuuttia</item>
         <item>1 tunti</item>

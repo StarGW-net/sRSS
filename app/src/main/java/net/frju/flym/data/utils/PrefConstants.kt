@@ -32,6 +32,7 @@ object PrefConstants {
 
     const val THEME = "theme"
     const val DISPLAY_IMAGES = "display_images"
+    const val DISPLAY_THUMBS = "display_thumbs"
 
     const val PRELOAD_IMAGE_MODE = "preload_image_mode"
     const val PRELOAD_IMAGE_MODE__WIFI_ONLY = "WIFI_ONLY_PRELOAD"
@@ -45,6 +46,9 @@ object PrefConstants {
     const val KEEP_TIME_UNREAD = "keep_time_unread"
 
     const val FONT_SIZE = "font_size"
+    const val FONT_SIZE_HEADING = "font_size_heading"
+
+    const val FULL_ARTICLE = "full_article"
 
     const val OPEN_BROWSER_DIRECTLY = "open_browser_directly"
     const val HIDE_BUTTON_MARK_ALL_AS_READ = "hide_button_mark_all_as_read"

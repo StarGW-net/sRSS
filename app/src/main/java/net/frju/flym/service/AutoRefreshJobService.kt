@@ -24,6 +24,8 @@ import android.app.job.JobService
 import android.content.ComponentName
 import android.content.Context
 import android.os.Build
+import android.util.Log
+import net.frju.flym.App
 import net.frju.flym.data.utils.PrefConstants
 import net.frju.flym.utils.getPrefBoolean
 import net.frju.flym.utils.getPrefString
@@ -43,11 +45,14 @@ class AutoRefreshJobService : JobService() {
             // DO NOT USE ANKO TO RETRIEVE THE SERVICE HERE (crash on API 21)
             val jobSchedulerService = context.getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler
 
-            val time = max(300, context.getPrefString(PrefConstants.REFRESH_INTERVAL, TWO_HOURS)!!.toInt())
+            App.myLog("Service Interval = " + context.getPrefString(PrefConstants.REFRESH_INTERVAL, TWO_HOURS))
+            val time = max(900, context.getPrefString(PrefConstants.REFRESH_INTERVAL, TWO_HOURS)!!.toInt())
 
             if (context.getPrefBoolean(PrefConstants.REFRESH_ENABLED, true)) {
+                App.myLog("Setting up service = " + time)
                 val builder = JobInfo.Builder(JOB_ID, ComponentName(context, AutoRefreshJobService::class.java))
-                        .setPeriodic(time * 1000L)
+                        // .setPeriodic(time * 1000L)
+                        .setPeriodic(time * 1000L,300L)
                         .setPersisted(true)
                         .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
 
@@ -59,14 +64,19 @@ class AutoRefreshJobService : JobService() {
                 ignoreNextJob = true // We can't add a initial delay with JobScheduler, so let's do this little hack instead
                 jobSchedulerService.schedule(builder.build())
             } else {
+                App.myLog("Cancelling scheduled jobs")
                 jobSchedulerService.cancel(JOB_ID)
             }
         }
     }
 
     override fun onStartJob(params: JobParameters): Boolean {
+        App.myLog("onStartJob")
+        App.myLog("ignoreNextJob = " + ignoreNextJob)
+        App.myLog("isRefreshing = " + getPrefBoolean(PrefConstants.IS_REFRESHING, false))
         if (!ignoreNextJob && !getPrefBoolean(PrefConstants.IS_REFRESHING, false)) {
             doAsync {
+                App.myLog("Service getting data")
                 FetcherService.fetch(this@AutoRefreshJobService, true, FetcherService.ACTION_REFRESH_FEEDS)
                 jobFinished(params, false)
             }
@@ -79,6 +89,7 @@ class AutoRefreshJobService : JobService() {
     }
 
     override fun onStopJob(params: JobParameters): Boolean {
+        App.myLog("Service onStopJob")
         return false
     }
 }

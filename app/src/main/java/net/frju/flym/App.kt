@@ -20,9 +20,12 @@ package net.frju.flym
 import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
+import net.fred.feedex.R
 import net.frju.flym.data.AppDatabase
 import net.frju.flym.data.utils.PrefConstants
 import net.frju.flym.utils.putPrefBoolean
+
+
 
 
 class App : Application() {
@@ -36,14 +39,29 @@ class App : Application() {
         @JvmStatic
         lateinit var db: AppDatabase
             private set
+
+        public fun myLog(message: String) {
+            // if (BuildConfig.DEBUG) {
+                // android.util.Log.w(context.getString(R.string.app_name), "STEVE: " + message)
+             // }
+        }
     }
 
     override fun onCreate() {
         super.onCreate()
 
+
+
         context = applicationContext
         db = AppDatabase.createDatabase(context)
 
         context.putPrefBoolean(PrefConstants.IS_REFRESHING, false) // init
+
+        App.myLog("onCreate")
+
     }
+
+
+
+
 }

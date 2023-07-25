@@ -1,5 +1,8 @@
 <resources>
 
+    <color name="core_grey_95">#121212</color>
+
+
     <!-- Base app theme. -->
     <style name="AppTheme" parent="Theme.AppCompat">
         <!-- Customize your theme here. -->
@@ -15,6 +18,11 @@
         <item name="colorArticleText">@color/article_text_dark</item>
         <item name="colorSubtitle">@color/subtitle_dark</item>
         <item name="colorSubtitleBorder">@color/subtitle_border_dark</item>
+
+        <item name="android:statusBarColor">@color/core_grey_95</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:navigationBarColor">@color/core_grey_95</item>
+        <item name="android:windowLightNavigationBar">false</item>
     </style>
 
     <style name="AppTheme.ActionBar" parent="Theme.AppCompat">

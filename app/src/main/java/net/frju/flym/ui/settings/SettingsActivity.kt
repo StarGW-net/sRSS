@@ -17,10 +17,14 @@
 
 package net.frju.flym.ui.settings
 
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import net.fred.feedex.R
+import net.frju.flym.App
+import net.frju.flym.service.AutoRefreshJobService
 import net.frju.flym.utils.setupTheme
 
 class SettingsActivity : AppCompatActivity() {
@@ -32,15 +36,22 @@ class SettingsActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_settings)
 
+        App.myLog("Settings screen created!")
+
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {
+                App.myLog("Settings screen finish!")
+                // AutoRefreshJobService.initAutoRefresh(this)
                 finish()
             }
         }
         return true
     }
+
+
+
 }

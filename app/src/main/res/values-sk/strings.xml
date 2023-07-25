@@ -7,14 +7,14 @@
         <item quantity="many">%d nových článkov</item>
         <item quantity="other">%d nových článkov</item>
     </plurals>
-    <string name="about_flym">O aplikácii Flym</string>
-    <string name="welcome_title">Vitajte v aplikácii Flym. Chcete pridať nový zdroj?</string>
+    <string name="about_sRSS">O aplikácii sRSS</string>
+    <string name="welcome_title">Vitajte v aplikácii sRSS. Chcete pridať nový zdroj?</string>
     <string name="cannot_find_feeds">No feeds has been found</string>
     <string name="menu_settings">Nastavenia</string>
     <string name="menu_edit_feed">Upraviť zdroj</string>
     <string name="menu_delete">Zmazať</string>
     <string name="menu_all_read">Označiť všetko ako prečítané</string>
-    <string name="flym_feeds">Flym zdroje</string>
+    <string name="sRSS_feeds">sRSS zdroje</string>
     <string name="error">Chyba</string>
     <string name="network_error">Sieť nie je nastavená</string>
     <!-- FEEDS -->
@@ -60,7 +60,6 @@
     <string name="settings_remove_duplicates_description">Checks the title of newly downloaded item and skips when one with the same title is already present</string>
     <string name="filter">Remove items containing keywords (coma-separated list)</string>
     <string-array name="settings_intervals">
-        <item>5 minút</item>
         <item>15 minút</item>
         <item>30 minút</item>
         <item>1 hodina</item>

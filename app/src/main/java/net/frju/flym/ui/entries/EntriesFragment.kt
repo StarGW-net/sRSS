@@ -19,14 +19,14 @@ package net.frju.flym.ui.entries
 
 import android.content.Intent
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener
+import android.content.pm.PackageInfo
+import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
-import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
+import android.util.Log
+import android.view.*
+import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.core.os.bundleOf
 import androidx.core.view.isGone
@@ -36,6 +36,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -48,27 +49,27 @@ import net.frju.flym.data.entities.EntryWithFeed
 import net.frju.flym.data.entities.Feed
 import net.frju.flym.data.utils.PrefConstants
 import net.frju.flym.service.FetcherService
+import net.frju.flym.ui.about.AboutActivity
 import net.frju.flym.ui.main.MainNavigator
-import net.frju.flym.utils.closeKeyboard
-import net.frju.flym.utils.getPrefBoolean
-import net.frju.flym.utils.registerOnPrefChangeListener
-import net.frju.flym.utils.unregisterOnPrefChangeListener
+import net.frju.flym.usage.UsageActivity
+import net.frju.flym.utils.*
+import org.jetbrains.anko.*
 import org.jetbrains.anko.appcompat.v7.titleResource
-import org.jetbrains.anko.attr
-import org.jetbrains.anko.colorAttr
 import org.jetbrains.anko.design.longSnackbar
-import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.notificationManager
 import org.jetbrains.anko.sdk21.listeners.onClick
 import org.jetbrains.anko.support.v4.dip
 import org.jetbrains.anko.support.v4.share
-import org.jetbrains.anko.uiThread
-import q.rorbin.badgeview.Badge
-import q.rorbin.badgeview.QBadgeView
-import java.util.Date
+import org.jetbrains.anko.support.v4.startActivity
+import java.util.*
 
+const val VIEW_CURRENT = "current_view"
+const val VIEW_ALL = 0;
+const val VIEW_UNREAD = 1;
+const val VIEW_FAV = 2;
 
 class EntriesFragment : Fragment() {
+
+    // val newAtricles: Int = 0
 
     companion object {
 
@@ -92,7 +93,8 @@ class EntriesFragment : Fragment() {
             field = value
 
             setupTitle()
-            bottom_navigation.post { initDataObservers() } // Needed to retrieve the correct selected tab position
+            initDataObservers()
+            // bottom_navigation.post { initDataObservers() } // Needed to retrieve the correct selected tab position
         }
 
     private val navigator: MainNavigator by lazy { activity as MainNavigator }
@@ -125,7 +127,7 @@ class EntriesFragment : Fragment() {
     private var entryIdsLiveData: LiveData<List<String>>? = null
     private var entryIds: List<String>? = null
     private var newCountLiveData: LiveData<Long>? = null
-    private var unreadBadge: Badge? = null
+    // private var unreadBadge: Badge? = null
     private var searchText: String? = null
     private val searchHandler = Handler()
     private var isDesc: Boolean = true
@@ -157,6 +159,12 @@ class EntriesFragment : Fragment() {
 
         setupRecyclerView()
 
+        // STEVE
+        recycler_view.addItemDecoration(DividerItemDecoration(context,
+                DividerItemDecoration.VERTICAL))
+
+        // STEVE
+        /*
         bottom_navigation.setOnNavigationItemSelectedListener {
             recycler_view.post {
                 listDisplayDate = Date().time
@@ -167,61 +175,90 @@ class EntriesFragment : Fragment() {
             activity?.toolbar?.menu?.findItem(R.id.menu_entries__share)?.isVisible = it.itemId == R.id.favorites
             true
         }
+        */
 
+        /*
         unreadBadge = QBadgeView(context).bindTarget((bottom_navigation.getChildAt(0) as ViewGroup).getChildAt(0)).apply {
             setGravityOffset(35F, 0F, true)
             isShowShadow = false
             badgeBackgroundColor = requireContext().colorAttr(R.attr.colorAccent)
         }
+        */
+
+
+        // STEVE
+        /*
+        read_all_fab.onClick { _ ->
+            val i:Int = bottom_navigation.visibility;
+
+            if (i == GONE) {
+                bottom_navigation.visibility = VISIBLE;
+            } else {
+                bottom_navigation.visibility = GONE;
+            }
+        }
+
+         */
 
         read_all_fab.onClick { _ ->
-            entryIds?.let { entryIds ->
-                if (entryIds.isNotEmpty()) {
+            read_all_fab_do()
+        }
+    }
+
+    private fun read_all_fab_do()
+    {
+        entryIds?.let { entryIds ->
+            if (entryIds.isNotEmpty()) {
+                doAsync {
+                    // TODO check if limit still needed
+                    entryIds.withIndex().groupBy { it.index / 300 }.map { pair -> pair.value.map { it.value } }.forEach {
+                        App.db.entryDao().markAsRead(it)
+                    }
+                }
+
+                coordinator.longSnackbar(R.string.marked_as_read, R.string.undo) { _ ->
                     doAsync {
                         // TODO check if limit still needed
                         entryIds.withIndex().groupBy { it.index / 300 }.map { pair -> pair.value.map { it.value } }.forEach {
-                            App.db.entryDao().markAsRead(it)
+                            App.db.entryDao().markAsUnread(it)
                         }
-                    }
 
-                    coordinator.longSnackbar(R.string.marked_as_read, R.string.undo) { _ ->
-                        doAsync {
-                            // TODO check if limit still needed
-                            entryIds.withIndex().groupBy { it.index / 300 }.map { pair -> pair.value.map { it.value } }.forEach {
-                                App.db.entryDao().markAsUnread(it)
-                            }
-
-                            uiThread {
-                                // we need to wait for the list to be empty before displaying the new items (to avoid scrolling issues)
-                                listDisplayDate = Date().time
-                                initDataObservers()
-                            }
+                        uiThread {
+                            // we need to wait for the list to be empty before displaying the new items (to avoid scrolling issues)
+                            listDisplayDate = Date().time
+                            initDataObservers()
                         }
                     }
                 }
+            }
 
-                if (feed == null || feed?.id == Feed.ALL_ENTRIES_ID) {
-                    activity?.notificationManager?.cancel(0)
-                }
+            if (feed == null || feed?.id == Feed.ALL_ENTRIES_ID) {
+                activity?.notificationManager?.cancel(0)
             }
         }
     }
 
+    // bottom_navigation.selectedItemId   - replace with a prefs
+
     private fun initDataObservers() {
+
+        val view_current: Int? = context?.getPrefInt(VIEW_CURRENT, VIEW_ALL);
+
         isDesc = context?.getPrefBoolean(PrefConstants.SORT_ORDER, true)!!
         entryIdsLiveData?.removeObservers(viewLifecycleOwner)
         entryIdsLiveData = when {
+
             searchText != null -> App.db.entryDao().observeIdsBySearch(searchText!!, isDesc)
-            feed?.isGroup == true && bottom_navigation.selectedItemId == R.id.unreads -> App.db.entryDao().observeUnreadIdsByGroup(feed!!.id, listDisplayDate, isDesc)
-            feed?.isGroup == true && bottom_navigation.selectedItemId == R.id.favorites -> App.db.entryDao().observeFavoriteIdsByGroup(feed!!.id, listDisplayDate, isDesc)
+            feed?.isGroup == true && view_current == VIEW_UNREAD -> App.db.entryDao().observeUnreadIdsByGroup(feed!!.id, listDisplayDate, isDesc)
+            feed?.isGroup == true && view_current == VIEW_FAV -> App.db.entryDao().observeFavoriteIdsByGroup(feed!!.id, listDisplayDate, isDesc)
             feed?.isGroup == true -> App.db.entryDao().observeIdsByGroup(feed!!.id, listDisplayDate, isDesc)
 
-            feed != null && feed?.id != Feed.ALL_ENTRIES_ID && bottom_navigation.selectedItemId == R.id.unreads -> App.db.entryDao().observeUnreadIdsByFeed(feed!!.id, listDisplayDate, isDesc)
-            feed != null && feed?.id != Feed.ALL_ENTRIES_ID && bottom_navigation.selectedItemId == R.id.favorites -> App.db.entryDao().observeFavoriteIdsByFeed(feed!!.id, listDisplayDate, isDesc)
+            feed != null && feed?.id != Feed.ALL_ENTRIES_ID && view_current == VIEW_UNREAD -> App.db.entryDao().observeUnreadIdsByFeed(feed!!.id, listDisplayDate, isDesc)
+            feed != null && feed?.id != Feed.ALL_ENTRIES_ID && view_current == VIEW_FAV -> App.db.entryDao().observeFavoriteIdsByFeed(feed!!.id, listDisplayDate, isDesc)
             feed != null && feed?.id != Feed.ALL_ENTRIES_ID -> App.db.entryDao().observeIdsByFeed(feed!!.id, listDisplayDate, isDesc)
 
-            bottom_navigation.selectedItemId == R.id.unreads -> App.db.entryDao().observeAllUnreadIds(listDisplayDate, isDesc)
-            bottom_navigation.selectedItemId == R.id.favorites -> App.db.entryDao().observeAllFavoriteIds(listDisplayDate, isDesc)
+            view_current == VIEW_UNREAD  -> App.db.entryDao().observeAllUnreadIds(listDisplayDate, isDesc)
+            view_current == VIEW_FAV -> App.db.entryDao().observeAllFavoriteIds(listDisplayDate, isDesc)
             else -> App.db.entryDao().observeAllIds(listDisplayDate, isDesc)
         }
 
@@ -232,16 +269,16 @@ class EntriesFragment : Fragment() {
         entriesLiveData?.removeObservers(viewLifecycleOwner)
         entriesLiveData = LivePagedListBuilder(when {
             searchText != null -> App.db.entryDao().observeSearch(searchText!!, isDesc)
-            feed?.isGroup == true && bottom_navigation.selectedItemId == R.id.unreads -> App.db.entryDao().observeUnreadsByGroup(feed!!.id, listDisplayDate, isDesc)
-            feed?.isGroup == true && bottom_navigation.selectedItemId == R.id.favorites -> App.db.entryDao().observeFavoritesByGroup(feed!!.id, listDisplayDate, isDesc)
+            feed?.isGroup == true && view_current == VIEW_UNREAD -> App.db.entryDao().observeUnreadsByGroup(feed!!.id, listDisplayDate, isDesc)
+            feed?.isGroup == true && view_current == VIEW_FAV -> App.db.entryDao().observeFavoritesByGroup(feed!!.id, listDisplayDate, isDesc)
             feed?.isGroup == true -> App.db.entryDao().observeByGroup(feed!!.id, listDisplayDate, isDesc)
 
-            feed != null && feed?.id != Feed.ALL_ENTRIES_ID && bottom_navigation.selectedItemId == R.id.unreads -> App.db.entryDao().observeUnreadsByFeed(feed!!.id, listDisplayDate, isDesc)
-            feed != null && feed?.id != Feed.ALL_ENTRIES_ID && bottom_navigation.selectedItemId == R.id.favorites -> App.db.entryDao().observeFavoritesByFeed(feed!!.id, listDisplayDate, isDesc)
+            feed != null && feed?.id != Feed.ALL_ENTRIES_ID && view_current == VIEW_UNREAD  -> App.db.entryDao().observeUnreadsByFeed(feed!!.id, listDisplayDate, isDesc)
+            feed != null && feed?.id != Feed.ALL_ENTRIES_ID && view_current == VIEW_FAV -> App.db.entryDao().observeFavoritesByFeed(feed!!.id, listDisplayDate, isDesc)
             feed != null && feed?.id != Feed.ALL_ENTRIES_ID -> App.db.entryDao().observeByFeed(feed!!.id, listDisplayDate, isDesc)
 
-            bottom_navigation.selectedItemId == R.id.unreads -> App.db.entryDao().observeAllUnreads(listDisplayDate, isDesc)
-            bottom_navigation.selectedItemId == R.id.favorites -> App.db.entryDao().observeAllFavorites(listDisplayDate, isDesc)
+            view_current == VIEW_UNREAD  -> App.db.entryDao().observeAllUnreads(listDisplayDate, isDesc)
+            view_current == VIEW_FAV -> App.db.entryDao().observeAllFavorites(listDisplayDate, isDesc)
             else -> App.db.entryDao().observeAll(listDisplayDate, isDesc)
         }, 30).build()
 
@@ -259,16 +296,37 @@ class EntriesFragment : Fragment() {
         newCountLiveData?.observe(viewLifecycleOwner, Observer { count ->
             if (count != null && count > 0L) {
                 // If we have an empty list, let's immediately display the new items
-                if (entryIds?.isEmpty() == true && bottom_navigation.selectedItemId != R.id.favorites) {
+                // App.myLog("New feed entries = " + count)
+                if (entryIds?.isEmpty() == true && view_current != VIEW_FAV) {
                     listDisplayDate = Date().time
                     initDataObservers()
                 } else {
-                    unreadBadge?.badgeNumber = count.toInt()
+                    // unreadBadge?.badgeNumber = count.toInt() // STEVE - where do I put the unread badge?
+                    App.myLog( "New feed entries = " + count)
+                    // Toast.makeText(context, count.toString() + " new articles", Toast.LENGTH_SHORT).show()
+                    if (feed?.title == null) {
+                        coordinator.longSnackbar("New articles", count.toString()) {}
+                    } else {
+                        coordinator.longSnackbar("New: " + feed?.title.toString(), count.toString()) {}
+                    }
+                    // recycler_view.smoothScrollToPosition(0);
+                    listDisplayDate = Date().time
+                    initDataObservers()
+                    // val llm = recycler_view.getLayoutManager()
+                    // recycler_view.smoothScrollToPosition(0);
+                    // llm?.scrollToPosition(0);
+                    // recycler_view?.post { llm?.scrollToPosition(0) }
+                    // refresh_layout.postDelayed({ llm?.scrollToPosition(0) }, 500)
                 }
             } else {
-                unreadBadge?.hide(false)
+                // unreadBadge?.hide(false)
+                App.myLog("No new entries!")
             }
         })
+
+        val llm = recycler_view.getLayoutManager()
+        llm?.scrollToPosition(0);
+
     }
 
     override fun onStart() {
@@ -309,9 +367,12 @@ class EntriesFragment : Fragment() {
                 R.color.colorAccent,
                 requireContext().attr(R.attr.colorPrimaryDark).resourceId)
 
+        // STEVE - put this on a button
+        /*
         refresh_layout.setOnRefreshListener {
             startRefresh()
         }
+         */
 
         val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
             private val VELOCITY = dip(800).toFloat()
@@ -337,7 +398,7 @@ class EntriesFragment : Fragment() {
                         } else {
                             App.db.entryDao().markAsUnread(listOf(entryWithFeed.entry.id))
                         }
-
+/*
                         coordinator.longSnackbar(R.string.marked_as_read, R.string.undo) { _ ->
                             doAsync {
                                 if (entryWithFeed.entry.read) {
@@ -347,8 +408,26 @@ class EntriesFragment : Fragment() {
                                 }
                             }
                         }
+*/
 
-                        if (bottom_navigation.selectedItemId != R.id.unreads) {
+                        if (entryWithFeed.entry.read)
+                        {
+                            coordinator.longSnackbar(R.string.marked_as_read, R.string.undo) { _ ->
+                                doAsync {
+                                     App.db.entryDao().markAsUnread(listOf(entryWithFeed.entry.id))
+                                }
+                            }
+                        } else {
+                            coordinator.longSnackbar(R.string.marked_as_unread, R.string.undo) { _ ->
+                                doAsync {
+                                     App.db.entryDao().markAsRead(listOf(entryWithFeed.entry.id))
+                                }
+                            }
+                        }
+
+                        val view_current: Int? = context?.getPrefInt(VIEW_CURRENT, VIEW_ALL);
+
+                        if (view_current != VIEW_UNREAD) {
                             uiThread {
                                 adapter.notifyItemChanged(viewHolder.adapterPosition)
                             }
@@ -385,6 +464,7 @@ class EntriesFragment : Fragment() {
         refresh_layout.postDelayed({ refreshSwipeProgress() }, 500)
     }
 
+    // STEVE - title is set here
     private fun setupTitle() {
         activity?.toolbar?.apply {
             if (feed == null || feed?.id == Feed.ALL_ENTRIES_ID) {
@@ -395,12 +475,44 @@ class EntriesFragment : Fragment() {
         }
     }
 
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
+        App.myLog( "Inflating Menu")
 
         inflater.inflate(R.menu.menu_fragment_entries, menu)
 
-        menu.findItem(R.id.menu_entries__share).isVisible = bottom_navigation.selectedItemId == R.id.favorites
+        val view_current: Int? = context?.getPrefInt(VIEW_CURRENT, VIEW_ALL);
+
+        menu.findItem(R.id.menu_entries__share).isVisible = view_current == VIEW_FAV;
+
+        if (view_current == VIEW_FAV)
+        {
+            menu.findItem(R.id.menu_entries__fav).isChecked = true
+            menu.findItem(R.id.menu_entries__unread).isChecked = false
+            menu.findItem(R.id.menu_entries__all).isChecked = false
+        }
+
+        if (view_current == VIEW_ALL)
+        {
+            menu.findItem(R.id.menu_entries__fav).isChecked = false
+            menu.findItem(R.id.menu_entries__unread).isChecked = false
+            menu.findItem(R.id.menu_entries__all).isChecked = true
+        }
+
+        if (view_current == VIEW_UNREAD)
+        {
+            menu.findItem(R.id.menu_entries__fav).isChecked = false
+            menu.findItem(R.id.menu_entries__unread).isChecked = true
+            menu.findItem(R.id.menu_entries__all).isChecked = false
+        }
+
+        // val refreshItems = menu.findItem(R.id.menu_entries__refresh)
+
+
+
+        // refreshItems.setOnClickListener(View.OnClickListener { displayAppLoadDialog() })
+
 
         val searchItem = menu.findItem(R.id.menu_entries__search)
         val searchView = searchItem.actionView as SearchView
@@ -448,6 +560,7 @@ class EntriesFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
         when (item.itemId) {
             R.id.menu_entries__share -> {
                 // TODO: will only work for the visible 30 items, need to find something better
@@ -457,10 +570,53 @@ class EntriesFragment : Fragment() {
                 }
             }
             R.id.menu_entries__about -> {
-                navigator.goToAboutMe()
+                var verName :String? = "latest"
+                try {
+                    val pInfo: PackageInfo? = context?.packageManager?.getPackageInfo(context?.packageName, 0)
+                    verName = pInfo?.versionName
+                } catch (e: PackageManager.NameNotFoundException) {
+                    // oh dear
+                    e.printStackTrace();
+                }
+
+                val url = "https://www.frju.net/apps/flym/help.html?ver=$verName"
+                val i = Intent(Intent.ACTION_VIEW)
+                i.data = Uri.parse(url)
+                startActivity(i)
+            }
+            R.id.menu_entries__refresh -> {
+                startRefresh()
             }
             R.id.menu_entries__settings -> {
                 navigator.goToSettings()
+            }
+            // STEVE
+            R.id.menu_entries__all_read -> {
+                read_all_fab_do()
+            }
+            R.id.menu_entries__usage -> {
+                startActivity<UsageActivity>()
+            }
+            R.id.menu_entries__all -> {
+                context?.putPrefInt(VIEW_CURRENT, VIEW_ALL);
+                requireActivity().invalidateOptionsMenu()
+                listDisplayDate = Date().time
+                initDataObservers();
+            }
+
+            R.id.menu_entries__unread -> {
+                context?.putPrefInt(VIEW_CURRENT, VIEW_UNREAD);
+                requireActivity().invalidateOptionsMenu()
+                listDisplayDate = Date().time
+                initDataObservers();
+            }
+
+            R.id.menu_entries__fav -> {
+                context?.putPrefInt(VIEW_CURRENT, VIEW_FAV);
+                requireActivity().invalidateOptionsMenu()
+                listDisplayDate = Date().time
+                initDataObservers();
+
             }
         }
 

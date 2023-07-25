@@ -113,9 +113,14 @@ class EntryDetailsFragment : Fragment() {
                 R.color.colorAccent,
                 requireContext().attr(R.attr.colorPrimaryDark).resourceId)
 
+        /*
+        // STEVE - disbale the down swipe for full article
         refresh_layout.setOnRefreshListener {
             switchFullTextMode()
         }
+        */
+
+
 
         if (defaultSharedPreferences.getBoolean(ENABLE_SWIPE_ENTRY, true)) {
             swipe_view.swipeGestureListener = object : SwipeGestureListener {
@@ -138,6 +143,8 @@ class EntryDetailsFragment : Fragment() {
         }
 
         setEntry(arguments?.getString(ARG_ENTRY_ID)!!, arguments?.getStringArrayList(ARG_ALL_ENTRIES_IDS)!!)
+
+
     }
 
     private fun initDataObservers() {
@@ -299,14 +306,21 @@ class EntryDetailsFragment : Fragment() {
                 var feed = App.db.feedDao().findById(entry.entry.feedId)
                 entryWithFeed = entry
                 preferFullText = feed?.retrieveFullText ?: true
+
                 isMobilizing = false
 
                 uiThread {
                     entry_view.setEntry(entryWithFeed, preferFullText)
-
                     initDataObservers()
 
                     setupToolbar()
+
+                    // STEVE
+                    if (App.context.getPrefBoolean(PrefConstants.FULL_ARTICLE, true)) {
+                        if (entry.entry.mobilizedContent == null || !preferFullText) {
+                            switchFullTextMode() // so only download full text of the ones we click into
+                        }
+                    }
                 }
             }
 

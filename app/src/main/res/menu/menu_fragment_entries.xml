@@ -3,6 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/menu_entries__refresh"
+        android:icon="@drawable/ic_refresh"
+        android:title="@android:string/search_go"
+        app:showAsAction="collapseActionView|always" />
+
+    <item
         android:id="@+id/menu_entries__search"
         android:icon="@drawable/ic_search_white_24dp"
         android:title="@android:string/search_go"
@@ -21,6 +27,34 @@
 
     <item
         android:id="@+id/menu_entries__about"
-        android:title="@string/about_flym"
+        android:title="@string/about_sRSS"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_entries__unread"
+        android:title="View Unread"
+        android:checkable="true"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_entries__all"
+        android:title="View All"
+        android:checkable="true"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_entries__fav"
+        android:title="View Favourites"
+        android:checkable="true"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_entries__all_read"
+        android:title="Mark All as Read"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_entries__usage"
+        android:title="Data Usage"
         app:showAsAction="never" />
 </menu>

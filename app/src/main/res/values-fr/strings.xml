@@ -5,9 +5,9 @@
         <item quantity="one">%d nouvel article</item>
         <item quantity="other">%d nouveaux articles</item>
     </plurals>
-    <string name="app_name">Flym</string>
-    <string name="about_flym">À propos de Flym</string>
-    <string name="welcome_title">Bienvenue sur Flym. Voulez-vous ajouter un flux ?</string>
+    <string name="app_name">sRSS</string>
+    <string name="about_sRSS">À propos de sRSS</string>
+    <string name="welcome_title">Bienvenue sur sRSS. Voulez-vous ajouter un flux ?</string>
     <string name="welcome_title_with_opml_import">Voulez-vous importer vos anciens flux ?</string>
     <string name="cannot_find_feeds">Aucun flux n\'a été trouvé</string>
     <string name="menu_settings">Paramètres</string>
@@ -17,7 +17,7 @@
     <string name="menu_enable_full_text_retrieval">Activer la récupération du texte complet</string>
     <string name="menu_disable_full_text_retrieval">Désactiver la récupération du texte complet</string>
     <string name="menu_all_read">Marquer tout comme lu</string>
-    <string name="flym_feeds">Flux Flym</string>
+    <string name="sRSS_feeds">Flux sRSS</string>
     <string name="error">Erreur</string>
     <string name="network_error">Pas de connexion disponible</string>
     <string name="drawer_explanation">Bienvenue !\n\nAppuyez longtemps sur les flux pour voir les options ▼</string>
@@ -64,24 +64,9 @@
     <string name="discover_search_label">Rechercher des flux</string>
     <string name="discover_search_hint">Recherche par mot-clés, URL ou sujets. Les sujets peuvent être indiqués avec un # au début du mot.</string>
     <string-array name="discover_topics">
-        <item>actualités</item>
-        <item>politique</item>
-        <item>monde</item>
-        <item>ingénierie</item>
-        <item>tech</item>
-        <item>startups</item>
-        <item>télécom</item>
-        <item>cybersécurité</item>
-        <item>confidentialité</item>
-        <item>science</item>
-        <item>médecine</item>
-        <item>santé</item>
-        <item>éducation</item>
-        <item>business</item>
-        <item>marketing</item>
-        <item>espace</item>
-        <item>design</item>
-        <item>bande-dessinée</item>
+        <item>News</item>
+        <item>Tech</item>
+        <item>Sport</item>
     </string-array>
     <!-- SETTINGS -->
     <string name="entry_default_title">Sans nom</string>
@@ -118,7 +103,6 @@
     <string name="settings_enable_entry_swipe">Activer la navigation latéral sur un article</string>
     <string name="settings_enable_entry_swipe_description">Si activé, permet de glisser horizontalement pour naviguer entre les différents articles.</string>
     <string-array name="settings_intervals">
-        <item>5 minutes</item>
         <item>15 minutes</item>
         <item>30 minutes</item>
         <item>1 heure</item>

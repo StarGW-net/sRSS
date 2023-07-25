@@ -5,10 +5,10 @@
         <item quantity="one">Ein neuer Eintrag</item>
         <item quantity="other">%d neue Einträge</item>
     </plurals>
-    <string name="app_name">Flym</string>
-    <string name="about_flym">Über Flym</string>
-    <string name="welcome_title">Willkommen bei Flym. Willst du einen Feed hinzufügen?</string>
-    <string name="welcome_title_with_opml_import">Möchtest du frühere Flym-Feeds importieren?</string>
+    <string name="app_name">sRSS</string>
+    <string name="about_sRSS">Über sRSS</string>
+    <string name="welcome_title">Willkommen bei sRSS. Willst du einen Feed hinzufügen?</string>
+    <string name="welcome_title_with_opml_import">Möchtest du frühere sRSS-Feeds importieren?</string>
     <string name="cannot_find_feeds">Keine Feeds gefunden</string>
     <string name="menu_settings">Einstellungen</string>
     <string name="menu_edit_feed">Feed bearbeiten</string>
@@ -17,7 +17,7 @@
     <string name="menu_enable_full_text_retrieval">Ganzen Text abrufen</string>
     <string name="menu_disable_full_text_retrieval">Nur Teaser abrufen</string>
     <string name="menu_all_read">Alle als gelesen markieren</string>
-    <string name="flym_feeds">Flym-Feeds</string>
+    <string name="sRSS_feeds">sRSS-Feeds</string>
     <string name="error">Fehler</string>
     <string name="network_error">Kein Internet</string>
     <string name="drawer_explanation">Willkommen!\n\nLänger auf die Feeds drücken, um die Optionen zu sehen ▼</string>
@@ -64,24 +64,9 @@
     <string name="discover_search_label">Feeds suchen</string>
     <string name="discover_search_hint">Suche nach Stichwort, URL oder Themen. Themen können mit #-Präfix angezeigt werden.</string>
     <string-array name="discover_topics">
-        <item>Nachrichten</item>
-        <item>Politik</item>
-        <item>Welt</item>
-        <item>Maschinenbau</item>
-        <item>Technik</item>
-        <item>Startups</item>
-        <item>Telekommunikation</item>
-        <item>Cybersecurity</item>
-        <item>Datenschutz</item>
-        <item>Wissenschaft</item>
-        <item>Medizin</item>
-        <item>Gesundheitswesen</item>
-        <item>Bildung</item>
-        <item>Wirtschaft</item>
-        <item>Marketing</item>
-        <item>Weltraum</item>
-        <item>Design</item>
-        <item>Comics</item>
+        <item>News</item>
+        <item>Tech</item>
+        <item>Sport</item>
     </string-array>
     <!-- SETTINGS -->
     <string name="entry_default_title">Unbenannt</string>
@@ -118,7 +103,6 @@
     <string name="settings_enable_entry_swipe">Wischen beim Anzeigen eines Eintrags aktivieren</string>
     <string name="settings_enable_entry_swipe_description">Wenn dies aktiviert ist, kann während der Anzeige eines Eintrags zwischen den Einträgen gewechselt werden.</string>
     <string-array name="settings_intervals">
-        <item>5 Minuten</item>
         <item>15 Minuten</item>
         <item>30 Minuten</item>
         <item>1 Stunde</item>

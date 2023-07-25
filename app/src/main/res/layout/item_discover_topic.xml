@@ -1,19 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<net.frju.flym.ui.discover.SquareGridItemLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="4dp">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="16dp"
+    android:paddingBottom="8dp"
+    android:paddingTop="8dp">
 
     <ImageView
         android:id="@+id/iv_topic_image"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:src="@drawable/sport"
+        android:layout_width="48dp"
+        android:layout_height="48dp" />
 
     <TextView
         android:id="@+id/tv_topic_title"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
         android:gravity="center"
+        android:paddingLeft="16dp"
+        android:text="string here"
         android:textSize="18sp" />
 
-</net.frju.flym.ui.discover.SquareGridItemLayout>
+</LinearLayout>

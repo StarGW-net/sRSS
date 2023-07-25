@@ -4,10 +4,10 @@
     <plurals name="number_of_new_entries">
         <item quantity="other">%d entri baru</item>
     </plurals>
-    <string name="app_name">Flym</string>
-    <string name="about_flym">Tentang Flym</string>
-    <string name="welcome_title">Selamat datang di Flym. Apakah anda ingin menambahkan feed?</string>
-    <string name="welcome_title_with_opml_import">Apakah anda ingin mengimpor feed Flym sebelumnya?</string>
+    <string name="app_name">sRSS</string>
+    <string name="about_sRSS">Tentang sRSS</string>
+    <string name="welcome_title">Selamat datang di sRSS. Apakah anda ingin menambahkan feed?</string>
+    <string name="welcome_title_with_opml_import">Apakah anda ingin mengimpor feed sRSS sebelumnya?</string>
     <string name="cannot_find_feeds">Tidak ada feed yang ditemukan</string>
     <string name="menu_settings">Pengaturan</string>
     <string name="menu_edit_feed">Sunting feed</string>
@@ -16,7 +16,7 @@
     <string name="menu_enable_full_text_retrieval">Aktifkan pengambilan teks lengkap</string>
     <string name="menu_disable_full_text_retrieval">Nonaktifkan pengambilan teks lengkap</string>
     <string name="menu_all_read">Tandai semua dibaca</string>
-    <string name="flym_feeds">Feed Flym</string>
+    <string name="sRSS_feeds">Feed sRSS</string>
     <string name="error">Galat</string>
     <string name="network_error">Jaringan tidak tersedia</string>
     <string name="drawer_explanation">Selamat datang!\n\nSentuh lama pada feed untuk menampilkan menu ▼</string>
@@ -95,7 +95,6 @@
     <string name="settings_enable_entry_swipe">Aktifkan geser saat membaca entri</string>
     <string name="settings_enable_entry_swipe_description">Jika diaktifkan, geser ke kiri atau kanan untuk membuka entri yang lama atau baru saat sedang membaca entri.</string>
     <string-array name="settings_intervals">
-        <item>5 menit</item>
         <item>15 menit</item>
         <item>30 menit</item>
         <item>1 jam</item>

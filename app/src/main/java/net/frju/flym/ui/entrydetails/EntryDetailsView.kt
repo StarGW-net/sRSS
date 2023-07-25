@@ -25,12 +25,14 @@ import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
 import android.util.AttributeSet
+import android.util.Log
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Toast
 import androidx.core.content.FileProvider.getUriForFile
 import net.fred.feedex.R
+import net.frju.flym.App
 import net.frju.flym.data.entities.EntryWithFeed
 import net.frju.flym.data.utils.PrefConstants
 import net.frju.flym.utils.FILE_SCHEME
@@ -90,10 +92,10 @@ class EntryDetailsView @JvmOverloads constructor(context: Context, attrs: Attrib
         // For color
         setBackgroundColor(Color.parseColor(BACKGROUND_COLOR))
 
-        // Text zoom level from preferences
+        // Text zoom level from preferences - STEVE - entry text!
         val fontSize = context.getPrefString(PrefConstants.FONT_SIZE, "0")!!.toInt()
         if (fontSize != 0) {
-            settings.textZoom = 100 + fontSize * 20
+            settings.textZoom = 100 + (fontSize * 35)
         }
 
         webViewClient = object : WebViewClient() {
@@ -129,6 +131,8 @@ class EntryDetailsView @JvmOverloads constructor(context: Context, attrs: Attrib
             var contentText = if (preferFullText) entryWithFeed.entry.mobilizedContent
                     ?: entryWithFeed.entry.description.orEmpty() else entryWithFeed.entry.description.orEmpty()
 
+            App.myLog("STEVE URL = " + entryWithFeed.entry.link)
+
             if (context.getPrefBoolean(PrefConstants.DISPLAY_IMAGES, true)) {
                 contentText = HtmlUtils.replaceImageURLs(contentText, entryWithFeed.entry.id)
                 if (settings.blockNetworkImage) {
@@ -153,6 +157,8 @@ class EntryDetailsView @JvmOverloads constructor(context: Context, attrs: Attrib
                     .append(contentText)
                     .append(BODY_END)
                     .toString()
+
+
 
             // do not put 'null' to the base url...
             loadDataWithBaseURL("", html, TEXT_HTML, UTF8, null)

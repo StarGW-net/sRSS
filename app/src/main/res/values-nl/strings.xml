@@ -5,9 +5,9 @@
         <item quantity="one">Eén nieuw item</item>
         <item quantity="other">%d nieuwe items</item>
     </plurals>
-    <string name="about_flym">Over Flym</string>
-    <string name="welcome_title">Welkom bij Flym. Wil je een feed toevoegen?</string>
-    <string name="welcome_title_with_opml_import">Wil je eerdere Flym-feeds importeren?</string>
+    <string name="about_sRSS">Over sRSS</string>
+    <string name="welcome_title">Welkom bij sRSS. Wil je een feed toevoegen?</string>
+    <string name="welcome_title_with_opml_import">Wil je eerdere sRSS-feeds importeren?</string>
     <string name="cannot_find_feeds">Geen feeds gevonden</string>
     <string name="menu_settings">Instellingen</string>
     <string name="menu_edit_feed">Feed bewerken</string>
@@ -16,7 +16,7 @@
     <string name="menu_enable_full_text_retrieval">Volledige teksten ophalen</string>
     <string name="menu_disable_full_text_retrieval">Geen volledige teksten ophalen</string>
     <string name="menu_all_read">Alles markeren als gelezen</string>
-    <string name="flym_feeds">Flym-feeds</string>
+    <string name="sRSS_feeds">sRSS-feeds</string>
     <string name="error">Fout</string>
     <string name="network_error">Geen netwerkverbinding</string>
     <string name="drawer_explanation">Welkom!\n\nHoudt feeds lang ingedrukt om opties te tonen ▼</string>
@@ -82,7 +82,6 @@
     <string name="refresh_on_startup">Ververst de feeds wanneer de app gestart wordt</string>
     <string name="refresh_on_startup_title">Ververs bij opstarten</string>
     <string-array name="settings_intervals">
-        <item>5 minuten</item>
         <item>15 minuten</item>
         <item>30 minuten</item>
         <item>1 uur</item>

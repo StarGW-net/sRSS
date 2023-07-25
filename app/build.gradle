@@ -10,11 +10,11 @@ androidExtensions {
 android {
 	compileSdkVersion 29
 	defaultConfig {
-		applicationId "net.frju.flym"
-		minSdkVersion 21
+		applicationId "net.stargw.srss"
+		minSdkVersion 24
 		targetSdkVersion 29
-		versionCode 33
-		versionName "2.4.0"
+		versionCode 22
+		versionName "22"
 	}
 
 	compileOptions {
@@ -26,9 +26,15 @@ android {
 		}
 	}
 
+    applicationVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = "${applicationId}-${variant.buildType.name}-v${defaultConfig.versionName}.apk"
+        }
+    }
+    
 	lintOptions {
 		// if true, stop the gradle build if errors are found
-		abortOnError true
+		abortOnError false
 	}
 
 	File localProps = project.rootProject.file('local.properties')

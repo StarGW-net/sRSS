@@ -7,7 +7,7 @@
         <item quantity="other">Novih članaka: %d</item>
     </plurals>
     <string name="app_name">Flim</string>
-    <string name="about_flym">O Flimu</string>
+    <string name="about_sRSS">O Flimu</string>
     <string name="welcome_title">Dobrodošli u Flim. Da li želite da dodate novi dovod?</string>
     <string name="welcome_title_with_opml_import">Da li želite da uvezete prethodno sačuvanu Flim dovoda?</string>
     <string name="cannot_find_feeds">Dovodi nisu pronađeni</string>
@@ -18,7 +18,7 @@
     <string name="menu_enable_full_text_retrieval">Omogući preuzimanje kompletnog teksta</string>
     <string name="menu_disable_full_text_retrieval">Onemogući preuzimanje kompletnog teksta</string>
     <string name="menu_all_read">Označi sve kao pročitano</string>
-    <string name="flym_feeds">Flim dovodi</string>
+    <string name="sRSS_feeds">Flim dovodi</string>
     <string name="error">Greška</string>
     <string name="network_error">Mreža nije podešena</string>
     <string name="drawer_explanation">Dobrodošli!\n\nZa pregled opcija, pritisnite i zadržite željeni dovod ▼</string>
@@ -65,24 +65,9 @@
     <string name="discover_search_label">Pretraga dovoda</string>
     <string name="discover_search_hint">Pretraga po ključnim rečima, URL ili temi. Tema može biti označena # prefiksom.</string>
     <string-array name="discover_topics">
-        <item>vesti</item>
-        <item>politika</item>
-        <item>svet</item>
-        <item>inženjerija</item>
-        <item>tehnologija</item>
-        <item>start-ap</item>
-        <item>telekomunikacije</item>
-        <item>sajber bezbednost</item>
-        <item>privatnost</item>
-        <item>nauka</item>
-        <item>medicina</item>
-        <item>zdravstvena nega</item>
-        <item>obrazovanje</item>
-        <item>posao</item>
-        <item>marketing</item>
-        <item>svemir</item>
-        <item>dizajn</item>
-        <item>stripovi</item>
+        <item>News</item>
+        <item>Tech</item>
+        <item>Sport</item>
     </string-array>
     <!-- SETTINGS -->
     <string name="entry_default_title">Bez naslova</string>
@@ -119,7 +104,6 @@
     <string name="settings_enable_entry_swipe">Omogući prevlačenje prstom prilikom pregleda članka</string>
     <string name="settings_enable_entry_swipe_description">Ukoliko je omogućeno, dozvoljava prevlačenje prstom zarad promene članka prilikom zasebnog pregleda.</string>
     <string-array name="settings_intervals">
-        <item>5 minuta</item>
         <item>15 minuta</item>
         <item>30 minuta</item>
         <item>1 čas</item>

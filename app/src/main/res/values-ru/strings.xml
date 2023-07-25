@@ -7,10 +7,10 @@
         <item quantity="many">%d новых записей</item>
         <item quantity="other">%d новых записей</item>
     </plurals>
-    <string name="app_name">Flym</string>
-    <string name="about_flym">О программе</string>
-    <string name="welcome_title">Добро пожаловать в Flym. Хотите добавить новую ленту?</string>
-    <string name="welcome_title_with_opml_import">Импортировать предыдущие ленты Flym?</string>
+    <string name="app_name">sRSS</string>
+    <string name="about_sRSS">О программе</string>
+    <string name="welcome_title">Добро пожаловать в sRSS. Хотите добавить новую ленту?</string>
+    <string name="welcome_title_with_opml_import">Импортировать предыдущие ленты sRSS?</string>
     <string name="cannot_find_feeds">Ленты не найдены</string>
     <string name="menu_settings">Настройки</string>
     <string name="menu_edit_feed">Редактировать ленту</string>
@@ -19,7 +19,7 @@
     <string name="menu_enable_full_text_retrieval">Загружать текст полностью</string>
     <string name="menu_disable_full_text_retrieval">Не загружать текст полностью</string>
     <string name="menu_all_read">Пометить все как прочитанные</string>
-    <string name="flym_feeds">Flym ленты</string>
+    <string name="sRSS_feeds">sRSS ленты</string>
     <string name="error">Ошибка</string>
     <string name="network_error">Нет подключения к сети</string>
     <string name="drawer_explanation">Добро пожаловать!\n\nДолгое нажатие на ленте откроет дополнительные опции ▼</string>
@@ -100,7 +100,6 @@
     <string name="settings_enable_entry_swipe">Включить смахивание в режиме просмотра записи</string>
     <string name="settings_enable_entry_swipe_description">Когда включено, в режиме просмотре записи смахивание в сторону приводит к переходу к другой записи.</string>
     <string-array name="settings_intervals">
-        <item>5 минут</item>
         <item>15 минут</item>
         <item>30 минут</item>
         <item>1 час</item>

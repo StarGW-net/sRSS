@@ -105,7 +105,7 @@ class MainActivity : AppCompatActivity(), MainNavigator, AnkoLogger {
         private const val WRITE_OPML_REQUEST_CODE = 2
         private const val READ_OPML_REQUEST_CODE = 3
         private val NEEDED_PERMS = arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-        private val BACKUP_OPML = File(Environment.getExternalStorageDirectory(), "/Flym_auto_backup.opml")
+        private val BACKUP_OPML = File(Environment.getExternalStorageDirectory(), "/sRSS_auto_backup.opml")
         private const val RETRIEVE_FULLTEXT_OPML_ATTR = "retrieveFullText"
     }
 
@@ -121,6 +121,7 @@ class MainActivity : AppCompatActivity(), MainNavigator, AnkoLogger {
 
         super.onCreate(savedInstanceState)
 
+        App.myLog("MainActivity onCreate")
 
         setContentView(R.layout.activity_main)
 
@@ -304,13 +305,17 @@ class MainActivity : AppCompatActivity(), MainNavigator, AnkoLogger {
             goToEntriesList(null)
         }
 
+        // STEVE - move to onResume - but will trigger too often?
         if (getPrefBoolean(PrefConstants.REFRESH_ON_STARTUP, defValue = true)) {
             startService(Intent(this, FetcherService::class.java)
                     .setAction(FetcherService.ACTION_REFRESH_FEEDS)
                     .putExtra(FetcherService.FROM_AUTO_REFRESH, true))
         }
 
-        AutoRefreshJobService.initAutoRefresh(this)
+
+        if (getPrefBoolean(PrefConstants.REFRESH_ENABLED, true)) {
+            AutoRefreshJobService.initAutoRefresh(this)
+        } // otherwise don't even bother to start the service
 
         handleImplicitIntent(intent)
 
@@ -345,7 +350,7 @@ class MainActivity : AppCompatActivity(), MainNavigator, AnkoLogger {
         if (intent?.getBooleanExtra(EXTRA_FROM_NOTIF, false) == true && feedGroups.isNotEmpty()) {
             feedAdapter.selectedItemId = Feed.ALL_ENTRIES_ID
             goToEntriesList(feedGroups[0].feedWithCount.feed)
-            bottom_navigation.selectedItemId = R.id.unreads
+            // bottom_navigation.selectedItemId = R.id.unreads   // No need to do this - maybe put a tick box on the menu item?
         }
     }
 
@@ -354,29 +359,32 @@ class MainActivity : AppCompatActivity(), MainNavigator, AnkoLogger {
         // If it comes from the All feeds App Shortcuts, select the right view
         if (intent?.action.equals(INTENT_ALL)) {
             feedAdapter.selectedItemId = Feed.ALL_ENTRIES_ID
-            bottom_navigation.selectedItemId = R.id.all
+            // bottom_navigation.selectedItemId = R.id.all
         }
 
         // If it comes from the Favorites feeds App Shortcuts, select the right view
         if (intent?.action.equals(INTENT_FAVORITES)) {
             feedAdapter.selectedItemId = Feed.ALL_ENTRIES_ID
-            bottom_navigation.selectedItemId = R.id.favorites
+            // bottom_navigation.selectedItemId = R.id.favorites
         }
 
         // If it comes from the Unreads feeds App Shortcuts, select the right view
         if (intent?.action.equals(INTENT_UNREADS)) {
             feedAdapter.selectedItemId = Feed.ALL_ENTRIES_ID
-            bottom_navigation.selectedItemId = R.id.unreads
+            // bottom_navigation.selectedItemId = R.id.unreads
         }
     }
 
     override fun onResume() {
         super.onResume()
 
+        App.myLog("MainActivity onResume")
+
         isInForeground = true
         notificationManager.cancel(0)
 
         handleResumeOnlyIntents(intent)
+
     }
 
     override fun onPause() {
@@ -515,7 +523,7 @@ class MainActivity : AppCompatActivity(), MainNavigator, AnkoLogger {
         val intent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
             type = "text/*"
             addCategory(Intent.CATEGORY_OPENABLE)
-            putExtra(Intent.EXTRA_TITLE, "Flym_" + System.currentTimeMillis() + ".opml")
+            putExtra(Intent.EXTRA_TITLE, "sRSS_" + System.currentTimeMillis() + ".opml")
         }
         startActivityForResult(intent, WRITE_OPML_REQUEST_CODE)
     }

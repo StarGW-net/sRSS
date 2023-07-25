@@ -4,10 +4,10 @@
     <plurals name="number_of_new_entries">
         <item quantity="other">%d 篇新文章</item>
     </plurals>
-    <string name="app_name">Flym</string>
-    <string name="about_flym">关于 Flym</string>
-    <string name="welcome_title">欢迎使用 Flym 。需要添加一个订阅源吗？</string>
-    <string name="welcome_title_with_opml_import">是否要导入旧版 Flym 中的订阅源？</string>
+    <string name="app_name">sRSS</string>
+    <string name="about_sRSS">关于 sRSS</string>
+    <string name="welcome_title">欢迎使用 sRSS 。需要添加一个订阅源吗？</string>
+    <string name="welcome_title_with_opml_import">是否要导入旧版 sRSS 中的订阅源？</string>
     <string name="cannot_find_feeds">未发现订阅源</string>
     <string name="menu_settings">设置</string>
     <string name="menu_edit_feed">编辑订阅源</string>
@@ -16,7 +16,7 @@
     <string name="menu_enable_full_text_retrieval">开启全文接收</string>
     <string name="menu_disable_full_text_retrieval">关闭全文接收</string>
     <string name="menu_all_read">标记全部为已读</string>
-    <string name="flym_feeds">Flym 订阅源</string>
+    <string name="sRSS_feeds">sRSS 订阅源</string>
     <string name="error">错误</string>
     <string name="network_error">网络不可用</string>
     <string name="drawer_explanation">欢迎!\n\n长按订阅源查看选项 ▼</string>
@@ -97,7 +97,6 @@
     <string name="settings_enable_entry_swipe">阅读条目时启用侧滑切换</string>
     <string name="settings_enable_entry_swipe_description">如果启用，则在阅读条目界面中，将可以通过侧滑的方式切换到上一个或下一个条目。</string>
     <string-array name="settings_intervals">
-        <item>5 分钟</item>
         <item>15 分钟</item>
         <item>30 分钟</item>
         <item>1 小时</item>

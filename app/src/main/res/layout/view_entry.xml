@@ -1,91 +1,105 @@
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/entry_container"
-    android:layout_width="match_parent"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/selected_item_background"
-    android:foreground="?android:selectableItemBackground"
-    android:minHeight="100dp"
-    tools:layout_editor_absoluteX="0dp"
-    tools:layout_editor_absoluteY="81dp">
+    android:paddingLeft="0dp"
+    android:layout_marginLeft="0dp"
+    android:paddingBottom="4dp"
+    android:paddingTop="4dp"
+    android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/main_icon"
-        android:layout_width="@dimen/entry_img_width"
-        android:layout_height="@dimen/entry_img_height"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="6dp"
-        android:scaleType="centerCrop"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="horizontal">
 
+        <ImageView
+            android:id="@+id/main_icon"
+            android:layout_width="@dimen/entry_img_width"
+            android:layout_height="@dimen/entry_img_height"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="6dp"
+            android:scaleType="centerCrop"/>
 
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:drawablePadding="3dp"
-        android:ellipsize="end"
-        android:gravity="top"
-        android:maxLines="3"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="?attr/colorReadState"
-        android:textIsSelectable="false"
-        app:layout_constraintBottom_toTopOf="@+id/feed_name_layout"
-        app:layout_constraintEnd_toStartOf="@+id/favorite_icon"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/main_icon"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="packed"
-        tools:text="long title" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/main_icon"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/feed_name_layout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:alpha="0.7"
-        android:drawablePadding="3dp"
-        android:maxLines="1"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="?attr/colorColoredReadState"
-        android:textIsSelectable="false"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/date"
-        app:layout_constraintStart_toEndOf="@+id/main_icon"
-        app:layout_constraintTop_toBottomOf="@+id/title"
-        tools:text="feed name" />
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:gravity="top"
+                android:maxLines="3"
+                android:text="Title here"
+                android:paddingRight="8dp"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="?attr/colorReadState"
+                android:textIsSelectable="false" />
 
-    <TextView
-        android:id="@+id/date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:alpha="0.3"
-        android:maxLines="1"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="?attr/colorReadState"
-        android:textIsSelectable="false"
-        app:layout_constraintBottom_toBottomOf="@+id/feed_name_layout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/feed_name_layout"
-        tools:text="24/12/2006 12:45" />
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="horizontal"
+                android:paddingTop="4dp">
+
+                <TextView
+                    android:id="@+id/feed_name_layout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="0.55"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:scrollHorizontally="true"
+                    android:singleLine="true"
+                    android:text="very very very long string here"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="?attr/colorColoredReadState"
+                    android:textIsSelectable="false" />
 
 
-    <ImageView
-        android:id="@+id/favorite_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="12dp"
-        android:src="@drawable/ic_star_24dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_gravity="right|center_vertical"
+                    android:layout_toLeftOf="@+id/feed_name_layout"
+                    android:layout_weight="0.45"
+                    android:gravity="right"
+                    android:orientation="horizontal"
+                    android:paddingLeft="4dp"
+                    android:paddingRight="8dp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+                    <TextView
+                        android:id="@+id/date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:text=" longer string"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="?attr/colorColoredReadState"
+                        android:textIsSelectable="false" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/favorite_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:src="@drawable/ic_star_24dp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

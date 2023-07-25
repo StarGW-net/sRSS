@@ -37,6 +37,7 @@ import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import kotlinx.android.synthetic.main.view_main_containers.view.*
 import net.fred.feedex.R
 import net.frju.flym.utils.onLaidOut
+import org.jetbrains.anko.appcompat.v7.titleResource
 
 class ContainersLayout @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : FrameLayout(context, attrs, defStyleAttr) {
 
@@ -61,6 +62,10 @@ class ContainersLayout @JvmOverloads constructor(context: Context, attrs: Attrib
 
     init {
         LayoutInflater.from(context).inflate(R.layout.view_main_containers, this, true)
+
+        toolbar?.apply {
+                titleResource = R.string.all_entries
+        }
     }
 
     fun hasTwoColumns(): Boolean {
