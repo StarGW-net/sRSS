@@ -13,8 +13,8 @@ android {
 		applicationId "net.stargw.srss"
 		minSdkVersion 24
 		targetSdkVersion 29
-		versionCode 22
-		versionName "22"
+		versionCode 23
+		versionName "23"
 	}
 
 	compileOptions {
@@ -27,9 +27,18 @@ android {
 	}
 
     applicationVariants.all { variant ->
-        variant.outputs.all {
+        variant.outputs.all { output ->
             outputFileName = "${applicationId}-${variant.buildType.name}-v${defaultConfig.versionName}.apk"
-        }
+			Task swTask = project.task("zzz${variant.name}", type: Copy) {
+				from output.outputFile.getParent()
+				into file("apks")
+				include output.outputFileName
+				// rename(output.outputFileName, "${applicationId}-${variant.buildType.name}-v${defaultConfig.versionName}.apk")
+				rename(output.outputFileName,output.outputFileName);
+
+			}
+			variant.assemble.finalizedBy(swTask)
+		}
     }
     
 	lintOptions {
