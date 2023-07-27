@@ -318,14 +318,11 @@ class FetcherService : IntentService(FetcherService::class.java.simpleName) {
                                         // For the Daily Mail
                                         val re = Regex("\\<p class=\"imageCaption\".*?\\<\\/p\\>")
                                         val text  = re.replace(sinput.string(), "");
+                                        // Log.w("STEVE HTML1", text);
 
-/*
-                                        val re = Regex("\\<img.*?data-src=\"(.*?)\".*?\\>")
-                                        val result = sinput.string().replace(re) { "<img src=\"" + it.groups[1]!!.value + "\">" }
-*/
                                         Readability4JExtended(link, Jsoup.parse(text, link)).parse().articleContent?.html()?.let {
                                             // Log.w("STEVE HTML",input.toString().takeLast(255) )
-                                            // Log.w("STEVE HTML", text)
+                                            // Log.w("STEVE HTML2", text)
                                             App.myLog("URL = " + link )
 
                                             // var forum = "<p>News brought to you by <a href=\"https://www.stevewatts.com\">Steve</a> :-)</p>"
@@ -336,26 +333,20 @@ class FetcherService : IntentService(FetcherService::class.java.simpleName) {
                                             if (match != null)
                                             {
                                                 forum = "<p>Match = " + match.value + "</p>"
-                                                App.myLog("HTML1 = " + forum )
+                                                // App.myLog("HTML1 = " + forum )
                                                 val (item) = match!!.destructured
-                                                App.myLog("HTML2" + item )
+                                                // App.myLog("HTML2" + item )
                                                 forum = "<p><a href=\"https://forums.theregister.com/forum/all/" + item + "\">Register Forum</p><br>"
                                             }
 
-                                            /*
-                                        val regex = "https:\\/\\/forums.theregister.com\\/(.*?)\"".toRegex()
-                                        val match = regex.find(text)
+                                            // For the Daily Mail
+                                            val re2 = Regex("\\<\\/*strong\\>");
+                                            val text2  = re2.replace(it, "");
 
+                                            val mobilizedHtml = HtmlUtils.improveHtmlContent(text2, getBaseUrl(link)) + forum
 
-
-                                        if (match != null)
-                                        {
-                                            forum = "<p>" + match.value + "</p>"
-                                            Log.w("STEVE HTML",forum )
-                                        }
-                                        */
-
-                                            val mobilizedHtml = HtmlUtils.improveHtmlContent(it, getBaseUrl(link)) + forum
+                                            // Fairly sanitised HTML
+                                            // Log.w("STEVE HTML3", mobilizedHtml);
 
                                             @Suppress("DEPRECATION")
                                             if (entry.description == null || Html.fromHtml(mobilizedHtml).length > Html.fromHtml(entry.description).length) { // If the retrieved text is smaller than the original one, then we certainly failed...

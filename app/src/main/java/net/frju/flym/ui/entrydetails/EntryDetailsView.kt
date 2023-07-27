@@ -55,12 +55,13 @@ class EntryDetailsView @JvmOverloads constructor(context: Context, attrs: Attrib
     private val TEXT_COLOR = colorString(R.attr.colorArticleText)
     private val SUBTITLE_COLOR = colorString(R.attr.colorSubtitle)
     private val SUBTITLE_BORDER_COLOR = "solid " + colorString(R.attr.colorSubtitleBorder)
+    // STEVE - entry CSS
     private val CSS = "<head><style type='text/css'> " +
             "body {max-width: 100%; margin: 0.3cm; font-family: sans-serif-light; color: " + TEXT_COLOR + "; background-color:" + BACKGROUND_COLOR + "; line-height: 150%} " +
             "* {max-width: 100%; word-break: break-word}" +
             "h1, h2 {font-weight: normal; line-height: 130%} " +
-            "h1 {font-size: 170%; margin-bottom: 0.1em} " +
-            "h2 {font-size: 140%} " +
+            "h1 {font-size: 120%; margin-bottom: 0.1em; font-weight: bold;} " +
+            "h2 {font-size: 110%} " +
             "a {color: #0099CC}" +
             "h1 a {color: inherit; text-decoration: none}" +
             "img {height: auto} " +
@@ -125,12 +126,15 @@ class EntryDetailsView @JvmOverloads constructor(context: Context, attrs: Attrib
     }
 
     fun setEntry(entryWithFeed: EntryWithFeed?, preferFullText: Boolean) {
+        App.myLog("STEVE setEntry = ");
+
         if (entryWithFeed == null) {
             loadDataWithBaseURL("", "", TEXT_HTML, UTF8, null)
         } else {
             var contentText = if (preferFullText) entryWithFeed.entry.mobilizedContent
                     ?: entryWithFeed.entry.description.orEmpty() else entryWithFeed.entry.description.orEmpty()
 
+            // App.myLog("STEVE Content = " + contentText)
             App.myLog("STEVE URL = " + entryWithFeed.entry.link)
 
             if (context.getPrefBoolean(PrefConstants.DISPLAY_IMAGES, true)) {
