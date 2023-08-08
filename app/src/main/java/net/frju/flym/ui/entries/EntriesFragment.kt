@@ -579,7 +579,7 @@ class EntriesFragment : Fragment() {
                     e.printStackTrace();
                 }
 
-                val url = "https://www.frju.net/apps/flym/help.html?ver=$verName"
+                val url = "https://www.stargw.net/android/help.html?ver=$verName"
                 val i = Intent(Intent.ACTION_VIEW)
                 i.data = Uri.parse(url)
                 startActivity(i)
