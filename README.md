@@ -18,5 +18,5 @@ A fork of Flym version 2.4.0 (https://github.com/FredJul/Flym) with the followin
 • Number of bug fixes (especially around background sync)
 <br>
 
-
+APK available here: https://www.stargw.net/android/apks.html?net.stargw.srss
 
