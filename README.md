@@ -4,6 +4,12 @@ sRSS News Reader
 
 Light and modern Android feed reader (Atom/RSS).
 
+<table><tr><td>
+<img src="https://github.com/StarGW-net/sRSS/blob/main/metadata/en-US/images/phoneScreenshots/01b.png?raw=true"
+     alt="sRSS"
+     height="320">
+</td></tr></table>
+
 A fork of Flym version 2.4.0 (https://github.com/FredJul/Flym) with the following changes:
 
 • Option to remove thumbnails in listing (they were taking up way too much space!)<br>
