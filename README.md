@@ -5,7 +5,7 @@ sRSS News Reader
 Light and modern Android feed reader (Atom/RSS).
 
 <table><tr><td>
-<img src="https://github.com/StarGW-net/sRSS/blob/main/metadata/en-US/images/phoneScreenshots/01b.png?raw=true"
+<img src="https://github.com/StarGW-net/sRSS/blob/master/metadata/en-US/images/phoneScreenshots/01.png?raw=true"
      alt="sRSS"
      height="320">
 </td></tr></table>
